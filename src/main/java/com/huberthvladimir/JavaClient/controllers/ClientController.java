@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.huberthvladimir.JavaClient.dto.ClientDTO;
 import com.huberthvladimir.JavaClient.services.ClientService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/clients")
@@ -34,12 +36,12 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientDTO insert(@RequestBody ClientDTO entity) {
+    public ClientDTO insert(@Valid @RequestBody ClientDTO entity) {
         return clientService.insert(entity);
     }
 
     @PutMapping("/{id}")
-    public ClientDTO update(@PathVariable Long id, @RequestBody ClientDTO entity) {
+    public ClientDTO update(@Valid @PathVariable Long id, @RequestBody ClientDTO entity) {
         return clientService.update(id, entity);
     }
 
