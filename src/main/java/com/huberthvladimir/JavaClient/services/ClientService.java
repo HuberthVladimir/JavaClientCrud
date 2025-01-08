@@ -1,8 +1,8 @@
 package com.huberthvladimir.JavaClient.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +20,9 @@ public class ClientService {
     ClientRepository clientRepository;
 
     @Transactional(readOnly = true)
-    public List<ClientDTO> findAll() {
-        List<ClientDTO> clients =
-                clientRepository.findAll().stream().map(client -> new ClientDTO(client)).toList();
-        return clients;
+    public Page<ClientDTO> findAll(Pageable pageable) {
+        Page<Client> clients = clientRepository.findAll(pageable);
+        return clients.map(client -> new ClientDTO(client));
     }
 
     @Transactional(readOnly = true)
